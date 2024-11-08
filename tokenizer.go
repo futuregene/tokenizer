@@ -72,8 +72,8 @@ package tokenizer
 //}
 
 import (
-	"strings"
 	"errors"
+	"strings"
 
 	"github.com/tiktoken-go/tokenizer/codec"
 )
@@ -92,6 +92,8 @@ type Codec interface {
 type Model string
 
 const (
+	O1Preview                Model = "o1-preview"
+	O1Mini                   Model = "o1-mini"
 	GPT4o                    Model = "gpt-4o"
 	GPT4                     Model = "gpt-4"
 	GPT35Turbo               Model = "gpt-3.5-turbo"
@@ -140,6 +142,7 @@ const (
 )
 
 var modelPrefixToEncoding map[Model]Encoding = map[Model]Encoding{
+	"o1-":              O200kBase,
 	"gpt-4o-":          O200kBase,
 	"gpt-4-":           Cl100kBase,
 	"gpt-3.5-turbo-":   Cl100kBase,
@@ -176,6 +179,8 @@ func Get(encoding Encoding) (Codec, error) {
 // is returned.
 func ForModel(model Model) (Codec, error) {
 	switch model {
+	case O1Preview, O1Mini:
+		return Get(O200kBase)
 	case GPT4o:
 		return Get(O200kBase)
 
