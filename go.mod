@@ -1,4 +1,4 @@
-module github.com/tiktoken-go/tokenizer
+module github.com/futuregene/tokenizer
 
 go 1.20
 
